@@ -22,4 +22,8 @@ public class RatesConfigurationProperties {
 
     private BigDecimal taxGrossAmountThreshold;
 
+    private BigDecimal totalZusRate;
+
+    private BigDecimal healthRate;
+
 }

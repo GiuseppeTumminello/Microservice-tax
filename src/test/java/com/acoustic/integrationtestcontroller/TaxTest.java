@@ -24,18 +24,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class TaxTest {
 
+    public static final String DESCRIPTION = "description";
+    public static final String TAX_DESCRIPTION = "Tax";
+    public static final String VALUE = "value";
+    private final String TAX_ENDPOINT = "/tax/getTax/";
     @Autowired
     private MockMvc mockMvc;
    @Autowired
    private ObjectMapper objectMapper;
 
-    private final String TAX_ENDPOINT = "/tax/getTax/";
+
 
 
     @ParameterizedTest
     @CsvSource({"6000,391.99", "7000, 457.32", "8555,558.91", "15143.99,1702.88"})
-    public void calculateHealth(BigDecimal input, BigDecimal health) throws Exception {
-        var expected = this.objectMapper.writeValueAsString(Map.of("Tax", health));
+    public void calculateTax(BigDecimal input, String tax) throws Exception {
+        var expected = this.objectMapper.writeValueAsString(Map.of(DESCRIPTION, TAX_DESCRIPTION, VALUE, tax));
         this.mockMvc.perform(post(TAX_ENDPOINT + input).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));

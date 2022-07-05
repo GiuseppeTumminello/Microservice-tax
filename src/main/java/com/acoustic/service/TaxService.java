@@ -16,24 +16,36 @@ public class TaxService implements SalaryCalculatorService {
 
 
     @Override
-    public BigDecimal apply(BigDecimal grossMonthlySalary, BigDecimal grossMonthlyMinusZusAndHealth) {
-        return (grossMonthlySalary.multiply(BigDecimal.valueOf(MONTHS_NUMBER))
+    public BigDecimal apply(BigDecimal grossMonthlySalary) {
+       return (grossMonthlySalary.multiply(BigDecimal.valueOf(MONTHS_NUMBER))
                 .compareTo(this.rate.getTaxGrossAmountThreshold()) < 0)
                 ? getTaxAmountBasedOnRate(
-                grossMonthlyMinusZusAndHealth,
+               grossMonthlySalary,
                 this.rate.getTaxRate17Rate())
-                : getTaxAmountBasedOnRate(grossMonthlyMinusZusAndHealth, this.rate.getTaxRate32Rate());
-    }
-
+                : getTaxAmountBasedOnRate(grossMonthlySalary, this.rate.getTaxRate32Rate());
+   }
 
     @Override
     public String getDescription() {
         return "Tax";
     }
 
+    private BigDecimal calculateTotalZus(BigDecimal grossMonthlySalary) {
+        return grossMonthlySalary.subtract(grossMonthlySalary.multiply(this.rate.getTotalZusRate()));
+    }
 
-    private BigDecimal getTaxAmountBasedOnRate(BigDecimal grossMonthlyMinusZusAndHealth, BigDecimal rate) {
-        return grossMonthlyMinusZusAndHealth.multiply(rate).setScale(2, RoundingMode.HALF_EVEN);
+    private BigDecimal calculateHealth(BigDecimal grossMonthlySalary) {
+        return grossMonthlySalary.subtract(grossMonthlySalary.multiply(this.rate.getHealthRate()));
+    }
+
+
+
+
+
+    private BigDecimal getTaxAmountBasedOnRate(BigDecimal grossMonthlySalary, BigDecimal rate) {
+        var salaryMinusTotalZus = calculateTotalZus(grossMonthlySalary);
+        var salaryMinusHealth = calculateHealth(salaryMinusTotalZus);
+        return salaryMinusHealth.multiply(rate).setScale(2, RoundingMode.HALF_EVEN);
 
     }
 }
