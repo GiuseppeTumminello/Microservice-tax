@@ -27,7 +27,7 @@ class TaxTest {
     public static final String DESCRIPTION = "description";
     public static final String TAX_DESCRIPTION = "Tax";
     public static final String VALUE = "value";
-    private final String TAX_ENDPOINT = "/tax/getTax/";
+    private final String TAX_ENDPOINT = "/tax/calculation/";
     @Autowired
     private MockMvc mockMvc;
    @Autowired

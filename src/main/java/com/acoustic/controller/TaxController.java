@@ -23,11 +23,11 @@ public class TaxController {
     private final SalaryCalculatorService salaryCalculatorService;
 
 
-    @PostMapping("/getTax/{grossMonthlySalary}")
+    @PostMapping("/calculation/{grossMonthlySalary}")
     public Map<String, String> calculateTax(@PathVariable @Min(2000) BigDecimal grossMonthlySalary) {
         var tax = this.salaryCalculatorService.apply(grossMonthlySalary);
         this.taxRepository.save(Tax.builder().taxAmount(tax).build());
-        return Map.of(DESCRIPTION,salaryCalculatorService.getDescription(), VALUE, String.valueOf(tax));
+        return Map.of(DESCRIPTION,this.salaryCalculatorService.getDescription(), VALUE, String.valueOf(tax));
     }
 
 
