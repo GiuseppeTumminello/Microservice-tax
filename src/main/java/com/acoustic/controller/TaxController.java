@@ -5,10 +5,7 @@ import com.acoustic.entity.Tax;
 import com.acoustic.repository.TaxRepository;
 import com.acoustic.service.SalaryCalculatorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
@@ -17,10 +14,11 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tax")
+@CrossOrigin
 public class TaxController {
 
-    public static final String DESCRIPTION = "description";
-    public static final String VALUE = "value";
+    private static final String DESCRIPTION = "description";
+    private static final String VALUE = "value";
     private final TaxRepository taxRepository;
     private final SalaryCalculatorService salaryCalculatorService;
 
