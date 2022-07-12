@@ -27,3 +27,18 @@ Swagger it is available via the following endpoints:
 * http://localhost:8098/tax/v3/api-docs
 
 The first endpoints is accessible via Spring api Gateway and the second ones through the server port.
+
+# Setup
+
+The project is strictly connected with its parent project "Spring-SalaryCalculator-Microservices",
+Please make sure to clone the parent repository.
+
+* Required:
+    * Docker
+
+
+* To create a container in Docker, follow the below instructions:
+
+    * Go to the folder: Spring-SalaryCalculator-Microservices
+    * Create a jar file running "gradle build" or "gradle bootJar"
+    * execute: docker-compose -f docker-compose.yml up
